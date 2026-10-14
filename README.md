@@ -185,6 +185,17 @@ docker run -d --name dnsmasq-webmin \
 - Im Container gibt es kein systemd, daher ist der dnsmasq-Restart dort nicht verfügbar (Button ausgeblendet).
   dnsmasq auf dem Host danach selbst neu starten: `sudo systemctl restart dnsmasq`.
 
+## CI (GitHub Actions)
+
+Beide Workflows laufen nur bei Push auf `main` und testen vorher mit `pytest`.
+
+| Workflow | Ergebnis |
+|---|---|
+| `.github/workflows/docker.yml` | `ghcr.io/<owner>/dnsmasq-webmin:latest` und `:sha-<commit>` |
+| `.github/workflows/deb.yml` | GitHub-Release `v<version>-<run>` mit den `.deb` für Python 3.12 und 3.13 |
+
+Die Debian-Revision ist die Workflow-Laufnummer, jede neue Version ist damit ein Upgrade der vorherigen.
+
 ## Tests
 
 ```bash

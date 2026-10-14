@@ -1,0 +1,71 @@
+name: Debian packages
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write # create releases
+
+concurrency:
+  group: deb-${{ github.ref }}
+  cancel-in-progress: false # never abort half-published releases
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-24.04
+    env:
+      # run_number increases with every run, so each package version is an upgrade
+      REVISION: ${{ github.run_number }}
+      MAINTAINER: ${{ github.repository_owner }} <${{ github.repository_owner }}@users.noreply.github.com>
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Test
+        run: |
+          pip install -e '.[dev]'
+          pytest -q
+
+      - name: Build packages
+        run: |
+          # one package per target python: 3.12 = Ubuntu 24.04, 3.13 = Debian 13 trixie
+          for py in 3.12 3.13; do
+            PY=$py packaging/deb/build-deb.sh
+          done
+          ls -l dist/
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="$(python3 -c "import tomllib; print(tomllib.load(open('pyproject.toml', 'rb'))['project']['version'])")"
+          tag="v${version}-${REVISION}"
+          cat > notes.md <<EOF
+          Debian packages for commit ${GITHUB_SHA::7} (amd64 only).
+
+          | Package | Target |
+          |---|---|
+          | \`dnsmasq-webmin_${version}-${REVISION}+py313_amd64.deb\` | Debian 13 trixie (Python 3.13) |
+          | \`dnsmasq-webmin_${version}-${REVISION}+py312_amd64.deb\` | Ubuntu 24.04 (Python 3.12) |
+
+          \`\`\`bash
+          sudo apt install ./dnsmasq-webmin_${version}-${REVISION}+py313_amd64.deb
+          \`\`\`
+
+          Configuration: \`/etc/dnsmasq-webmin/dnsmasq-webmin.env\`, then \`sudo systemctl restart dnsmasq-webmin\`.
+          EOF
+          gh release create "$tag" dist/*.deb \
+            --target "$GITHUB_SHA" \
+            --title "dnsmasq-webmin ${version}-${REVISION}" \
+            --notes-file notes.md
