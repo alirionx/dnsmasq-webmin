@@ -1,0 +1,20 @@
+#!/bin/sh
+set -e
+
+if [ "$1" = "configure" ]; then
+    # byte-compile with the system python (not shipped, keeps the package python-version clean)
+    python3 -m compileall -q /opt/dnsmasq-webmin/app /opt/dnsmasq-webmin/lib >/dev/null 2>&1 || true
+
+    if [ -d /run/systemd/system ]; then
+        systemctl daemon-reload
+        if [ -z "$2" ]; then
+            # fresh install
+            systemctl enable --now dnsmasq-webmin.service || true
+        else
+            # upgrade: only restart if it was running
+            systemctl try-restart dnsmasq-webmin.service || true
+        fi
+    fi
+fi
+
+exit 0

@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e
+
+if [ -d /run/systemd/system ]; then
+    systemctl daemon-reload || true
+fi
+
+if [ "$1" = "purge" ]; then
+    # the database; generated files in /etc/dnsmasq.d are kept on purpose,
+    # removing them would silently change the running DNS/DHCP setup
+    rm -rf /var/lib/dnsmasq-webmin /var/lib/private/dnsmasq-webmin
+    rmdir /etc/dnsmasq-webmin 2>/dev/null || true
+fi
+
+exit 0

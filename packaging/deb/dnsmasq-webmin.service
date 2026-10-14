@@ -1,0 +1,41 @@
+[Unit]
+Description=dnsmasq-webmin - web UI for dnsmasq DNS entries and DHCP ranges
+Documentation=file:///usr/share/doc/dnsmasq-webmin/README.md
+After=network.target
+
+[Service]
+Type=exec
+EnvironmentFile=/etc/dnsmasq-webmin/dnsmasq-webmin.env
+Environment=PYTHONPATH=/opt/dnsmasq-webmin/lib PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+WorkingDirectory=/opt/dnsmasq-webmin
+ExecStart=/usr/bin/python3 -m app.main
+Restart=on-failure
+RestartSec=5
+
+# Runs as root: it has to write /etc/dnsmasq.d and restart dnsmasq via systemctl.
+# Everything else is locked down.
+StateDirectory=dnsmasq-webmin
+StateDirectoryMode=0700
+ProtectSystem=strict
+ReadWritePaths=/etc/dnsmasq.d
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+NoNewPrivileges=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+ProtectHostname=yes
+RestrictSUIDSGID=yes
+RestrictRealtime=yes
+RestrictNamespaces=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+SystemCallArchitectures=native
+UMask=0022
+
+[Install]
+WantedBy=multi-user.target

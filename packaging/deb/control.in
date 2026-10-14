@@ -1,0 +1,17 @@
+Package: dnsmasq-webmin
+Version: @VERSION@
+Architecture: @ARCH@
+Maintainer: @MAINTAINER@
+Installed-Size: @SIZE@
+Depends: python3 (>= @PY@), python3 (<< @PY_NEXT@)
+Recommends: dnsmasq
+Section: net
+Priority: optional
+Homepage: https://github.com/alirionx/dnsmasq-webmin
+Description: web UI and REST API for dnsmasq DNS entries and DHCP ranges
+ Manages dnsmasq sub config files in /etc/dnsmasq.d (host-record, address,
+ cname, dhcp-range) through a FastAPI REST API and a Vue/Vuetify web UI.
+ The main dnsmasq configuration is never touched. Optionally restarts
+ dnsmasq via systemd after validating the config with 'dnsmasq --test'.
+ .
+ Python dependencies are bundled in /opt/dnsmasq-webmin/lib.
