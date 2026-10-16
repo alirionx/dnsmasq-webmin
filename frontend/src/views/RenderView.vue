@@ -1,5 +1,5 @@
 <script setup>
-import { mdiRefresh, mdiSync } from '@mdi/js'
+import { HardDriveDownload, RefreshCw } from '@lucide/vue'
 import { ref, watch } from 'vue'
 import { api } from '@/api'
 import CodeBlock from '@/components/CodeBlock.vue'
@@ -31,33 +31,36 @@ async function sync() {
 </script>
 
 <template>
-  <v-container fluid class="pa-4 pa-md-6">
-    <div class="d-flex flex-wrap align-center ga-3 mb-4">
+  <v-container class="page">
+    <div class="d-flex align-center flex-wrap ga-3 mb-6">
       <div>
-        <h1 class="text-headline-small">Rendered config</h1>
-        <p class="text-body-medium text-medium-emphasis">What dnsmasq will read from the conf dir.</p>
+        <h1 class="page-title">Rendered config</h1>
+        <p class="text-body-medium text-medium-emphasis mt-1">What dnsmasq reads from the conf dir.</p>
       </div>
       <v-spacer />
-      <v-btn-toggle v-model="filter" mandatory density="compact" variant="outlined" divided color="secondary">
+      <v-btn-toggle v-model="filter" mandatory density="compact" variant="outlined" divided>
         <v-btn value="all">All</v-btn>
         <v-btn value="dns">DNS</v-btn>
         <v-btn value="dhcp">DHCP</v-btn>
       </v-btn-toggle>
-      <v-btn :icon="mdiRefresh" variant="text" title="Reload" :loading="loading" @click="load" />
-      <v-btn color="primary" variant="flat" :prepend-icon="mdiSync" @click="syncDialog = true">Sync to disk</v-btn>
+      <v-btn :icon="RefreshCw" variant="text" aria-label="Reload" title="Reload" :loading="loading" @click="load" />
+      <v-btn color="primary" variant="flat" size="large" :prepend-icon="HardDriveDownload" @click="syncDialog = true">
+        Sync to disk
+      </v-btn>
     </div>
 
-    <v-empty-state v-if="!loading && !files.length" title="Nothing to render" text="No config files exist yet." />
+    <v-card v-if="!loading && !files.length" class="panel" border flat>
+      <v-empty-state title="Nothing to render" text="No config files exist yet." />
+    </v-card>
 
-    <v-card v-for="file in files" :key="file.filename" rounded="xl" class="mb-4">
-      <v-card-item>
-        <v-card-title class="text-mono text-title-medium">{{ file.filename }}</v-card-title>
-        <template #append>
-          <v-chip size="small" label :color="file.kind === 'dns' ? 'secondary' : 'tertiary'">
-            {{ file.kind.toUpperCase() }}
-          </v-chip>
-        </template>
-      </v-card-item>
+    <v-card v-for="file in files" :key="file.filename" class="panel mb-4" border flat>
+      <div class="d-flex align-center ga-3 px-4 pt-4">
+        <span class="text-title-small text-mono text-truncate">{{ file.filename }}</span>
+        <v-spacer />
+        <v-chip size="small" variant="tonal" :color="file.kind === 'dns' ? 'primary' : 'secondary'">
+          {{ file.kind.toUpperCase() }}
+        </v-chip>
+      </div>
       <v-card-text><CodeBlock :code="file.content" /></v-card-text>
     </v-card>
 

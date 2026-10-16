@@ -1,0 +1,75 @@
+/* Global styles shared by all views (look of cloudinit-nocloud-configurator). */
+
+:root {
+  --v-font-body: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --v-font-heading: var(--v-font-body);
+  --app-font-mono: ui-monospace, 'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, monospace;
+}
+
+.v-application {
+  font-family: var(--v-font-body);
+  letter-spacing: normal;
+}
+
+/* Lucide icons render as inline SVG; size them like font icons */
+.v-icon svg,
+.v-btn svg {
+  width: 1em;
+  height: 1em;
+}
+
+.text-mono {
+  font-family: var(--app-font-mono) !important;
+}
+
+/* Page layout used by the views */
+.page {
+  max-width: 1200px;
+  padding: 40px 32px;
+}
+@media (max-width: 600px) {
+  .page {
+    padding: 24px 16px;
+  }
+}
+.page-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+/* Sidebar section headings */
+.nav-heading {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase;
+}
+
+/* Bordered surface cards, tables with small uppercase headers */
+.panel {
+  background: rgb(var(--v-theme-surface));
+}
+.panel .v-table {
+  background: transparent;
+}
+.panel th {
+  font-size: 0.75rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600 !important;
+}
+
+/* Tinted icon tile, e.g. in card headers */
+.icon-tile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  color: rgb(var(--v-theme-primary));
+  background: rgba(var(--v-theme-primary), 0.12);
+  flex: none;
+}

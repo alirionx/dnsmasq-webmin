@@ -40,7 +40,7 @@ async function onSubmit() {
 
 <template>
   <v-dialog v-model="open" :max-width="maxWidth" :persistent="saving" scrollable>
-    <v-card :title="title" rounded="xl">
+    <v-card :title="title">
       <v-card-text class="pt-2">
         <v-form ref="form" @submit.prevent="onSubmit">
           <slot />
@@ -58,7 +58,7 @@ async function onSubmit() {
       </v-card-text>
       <v-card-actions class="px-6 pb-4">
         <v-spacer />
-        <v-btn variant="text" :disabled="saving" @click="open = false">Cancel</v-btn>
+        <v-btn :disabled="saving" @click="open = false">Cancel</v-btn>
         <v-btn :color="submitColor" variant="flat" :loading="saving" @click="onSubmit">{{ submitText }}</v-btn>
       </v-card-actions>
     </v-card>

@@ -1,5 +1,5 @@
 <script setup>
-import { mdiCheck, mdiContentCopy } from '@mdi/js'
+import { Check, Copy } from '@lucide/vue'
 import { ref } from 'vue'
 import { notify } from '@/notify'
 
@@ -21,10 +21,11 @@ async function copy() {
   <div class="code-block">
     <v-btn
       class="copy-btn"
-      :icon="copied ? mdiCheck : mdiContentCopy"
+      :icon="copied ? Check : Copy"
       size="small"
       variant="text"
       title="Copy"
+      aria-label="Copy to clipboard"
       @click="copy"
     />
     <pre>{{ code }}</pre>
@@ -46,7 +47,7 @@ pre {
   margin: 0;
   padding: 16px 48px 16px 16px;
   overflow-x: auto;
-  font-family: ui-monospace, 'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, monospace;
+  font-family: var(--app-font-mono);
   font-size: 0.85rem;
   line-height: 1.55;
 }

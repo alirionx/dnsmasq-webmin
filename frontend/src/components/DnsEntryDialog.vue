@@ -49,7 +49,7 @@ const save = () => props.submit(payload())
 
 <template>
   <FormDialog v-model="open" :title="entry ? 'Edit DNS entry' : 'New DNS entry'" :submit="save">
-    <v-btn-toggle v-model="form.type" mandatory color="secondary" variant="outlined" divided class="mb-4 w-100">
+    <v-btn-toggle v-model="form.type" mandatory variant="outlined" divided class="mb-4 w-100">
       <v-btn v-for="t in DNS_TYPES" :key="t.value" :value="t.value" class="flex-grow-1">{{ t.title }}</v-btn>
     </v-btn-toggle>
     <p class="text-body-small text-medium-emphasis mb-4">

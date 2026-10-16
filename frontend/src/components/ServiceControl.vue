@@ -1,6 +1,6 @@
 <script setup>
-/** dnsmasq status chip + restart button. Renders nothing unless dnsmasq runs as systemd unit. */
-import { mdiRestart } from '@mdi/js'
+/** dnsmasq status + restart in the sidebar. Renders nothing unless dnsmasq runs as systemd unit. */
+import { RotateCw } from '@lucide/vue'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { api } from '@/api'
 import ConfirmDialog from './ConfirmDialog.vue'
@@ -26,7 +26,9 @@ onMounted(() => {
 })
 onBeforeUnmount(() => clearInterval(timer))
 
-const stateColor = computed(() => ({ active: 'success', failed: 'error', activating: 'warning' })[status.value?.active_state] ?? 'grey')
+const stateColor = computed(
+  () => ({ active: 'success', failed: 'error', activating: 'warning' })[status.value?.active_state] ?? 'surface-variant',
+)
 
 async function restart() {
   try {
@@ -39,17 +41,14 @@ async function restart() {
 </script>
 
 <template>
-  <template v-if="status?.available">
-    <v-chip
-      class="mr-1 d-none d-sm-flex"
-      size="small"
-      variant="tonal"
-      :title="status.since ? `since ${status.since}` : undefined"
-    >
-      <v-badge dot inline :color="stateColor" class="mr-1" />
-      dnsmasq {{ status.active_state }}
-    </v-chip>
-    <v-btn :icon="mdiRestart" title="Restart dnsmasq" @click="confirmOpen = true" />
+  <v-list v-if="status?.available" nav density="comfortable" class="px-3 pb-0">
+    <v-list-subheader class="nav-heading">Service</v-list-subheader>
+    <div class="status d-flex align-center ga-2 px-4 pb-2" :title="status.since ? `since ${status.since}` : undefined">
+      <span class="dot" :class="`bg-${stateColor}`" />
+      <span class="text-body-medium">{{ status.unit }}</span>
+      <span class="text-body-medium text-medium-emphasis">{{ status.active_state }}</span>
+    </div>
+    <v-list-item :prepend-icon="RotateCw" title="Restart dnsmasq" role="button" rounded="lg" @click="confirmOpen = true" />
 
     <ConfirmDialog
       v-model="confirmOpen"
@@ -59,5 +58,14 @@ async function restart() {
       color="primary"
       :submit="restart"
     />
-  </template>
+  </v-list>
 </template>
+
+<style scoped>
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: none;
+}
+</style>

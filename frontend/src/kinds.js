@@ -1,4 +1,4 @@
-import { mdiDns, mdiLanConnect } from '@mdi/js'
+import { Globe, Network } from '@lucide/vue'
 
 const dnsNames = (e) => (e.names ?? e.domains ?? e.aliases ?? []).join(', ')
 
@@ -23,7 +23,7 @@ const actions = { title: '', key: 'actions', sortable: false, align: 'end', widt
 export const KINDS = {
   dns: {
     title: 'DNS entries',
-    icon: mdiDns,
+    icon: Globe,
     entryLabel: 'DNS entry',
     entryLabelPlural: 'DNS entries',
     headers: [
@@ -37,7 +37,7 @@ export const KINDS = {
   },
   dhcp: {
     title: 'DHCP ranges',
-    icon: mdiLanConnect,
+    icon: Network,
     entryLabel: 'DHCP range',
     entryLabelPlural: 'DHCP ranges',
     headers: [
@@ -52,7 +52,7 @@ export const KINDS = {
 }
 
 export const DNS_TYPES = [
-  { value: 'host-record', title: 'Host record', subtitle: 'A/AAAA + PTR for one or more names', color: 'secondary' },
-  { value: 'address', title: 'Address', subtitle: 'Domain incl. all subdomains → IP', color: 'tertiary' },
+  { value: 'host-record', title: 'Host record', subtitle: 'A/AAAA + PTR for one or more names', color: 'primary' },
+  { value: 'address', title: 'Address', subtitle: 'Domain incl. all subdomains → IP', color: 'secondary' },
   { value: 'cname', title: 'CNAME', subtitle: 'Alias for a name known to dnsmasq', color: 'info' },
 ]

@@ -2,8 +2,23 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>dnsmasq-webmin</title>
+    <script>
+      // apply the stored theme before the first render to avoid a flash (dark is the default)
+      ;(function () {
+        var theme = 'dark'
+        try {
+          if (localStorage.getItem('dnsmasq-webmin.theme') === 'light') theme = 'light'
+        } catch (e) {}
+        document.documentElement.dataset.theme = theme
+      })()
+    </script>
+    <style>
+      html[data-theme='light'] { background: #f5f6f8; color-scheme: light; }
+      html[data-theme='dark'] { background: #0e0f12; color-scheme: dark; }
+    </style>
   </head>
   <body>
     <div id="app"></div>

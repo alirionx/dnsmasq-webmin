@@ -61,7 +61,9 @@ DNSMASQ_WEBMIN_CONF_DIR=./data/dnsmasq.d DNSMASQ_WEBMIN_DB_PATH=./data/db.json A
 
 ## Weboberfläche
 
-Vue 3 + [Vuetify](https://vuetifyjs.com) (Material Design 3), gebaut mit Vite. Quellcode in `frontend/src/`:
+Vue 3 + [Vuetify](https://vuetifyjs.com), gebaut mit Vite. Optik wie cloudinit-nocloud-configurator: dunkles Theme
+als Standard, Akzent Mint/Lachs, feste Sidebar, Schrift Inter (lokal gebündelt), Icons von Lucide.
+Quellcode in `frontend/src/`:
 
 | Datei | Inhalt |
 |---|---|
@@ -70,6 +72,9 @@ Vue 3 + [Vuetify](https://vuetifyjs.com) (Material Design 3), gebaut mit Vite. Q
 | `components/*Dialog.vue` | Formulare (Anlegen/Bearbeiten/Löschen) |
 | `kinds.js` | Tabellenspalten und Texte je Typ (dns/dhcp) |
 | `rules.js` | Client-Validierung (Backend bleibt maßgeblich) |
+| `plugins/vuetify.js` | Farbpalette (hell/dunkel) und Komponenten-Defaults |
+| `styles/app.css` | globale Styles (Schrift, Seitenlayout, Tabellen) |
+| `theme.js` | Theme-Umschaltung, gespeichert im Browser |
 | `api.js` | Fetch-Wrapper für `/api` |
 
 Entwicklung mit Hot-Reload: Backend auf Port 5000 starten, dann
