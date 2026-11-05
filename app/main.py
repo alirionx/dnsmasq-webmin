@@ -32,7 +32,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app = FastAPI(
         title="dnsmasq-webmin",
         description="Manage dnsmasq sub config files (DNS entries and DHCP ranges) in the conf dir.",
-        version="0.1.0",
+        version="0.2.0",
         lifespan=lifespan,
     )
 

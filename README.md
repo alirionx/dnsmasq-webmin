@@ -151,10 +151,10 @@ curl $API/render/text
 ## Debian-Paket (systemd-Service)
 
 ```bash
-PY=3.13 packaging/deb/build-deb.sh   # Debian 13 trixie  → dist/dnsmasq-webmin_0.1.0-1+py313_amd64.deb
-PY=3.12 packaging/deb/build-deb.sh   # Ubuntu 24.04      → dist/dnsmasq-webmin_0.1.0-1+py312_amd64.deb
+PY=3.13 packaging/deb/build-deb.sh   # Debian 13 trixie  → dist/dnsmasq-webmin_0.2.0-1+py313_amd64.deb
+PY=3.12 packaging/deb/build-deb.sh   # Ubuntu 24.04      → dist/dnsmasq-webmin_0.2.0-1+py312_amd64.deb
 
-sudo apt install ./dist/dnsmasq-webmin_0.1.0-1+py313_amd64.deb
+sudo apt install ./dist/dnsmasq-webmin_0.2.0-1+py313_amd64.deb
 ```
 
 - App unter `/opt/dnsmasq-webmin`, Python-Abhängigkeiten gebündelt in `/opt/dnsmasq-webmin/lib`,
