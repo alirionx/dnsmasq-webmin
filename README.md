@@ -207,6 +207,18 @@ Die Debian-Revision ist die Workflow-Laufnummer, jede neue Version ist damit ein
 .venv/bin/pytest
 ```
 
+## Secret-Scan vor dem Push
+
+```bash
+scripts/secret-scan.sh
+```
+
+Prüft mit [gitleaks](https://github.com/gitleaks/gitleaks) die komplette Git-Historie und den Arbeitsstand
+(getrackte und neue Dateien, ohne alles aus `.gitignore`). Nutzt ein installiertes `gitleaks`, sonst das
+Docker-Image. Der Scan läuft bewusst nur lokal und ist nicht Teil der GitHub Actions.
+
+Exit-Codes: `0` sauber, `1` Secrets gefunden, `2` Scan konnte nicht laufen. Fehlalarme kommen in `.gitleaksignore`.
+
 ## Lizenz
 
 [Apache License 2.0](LICENSE)
