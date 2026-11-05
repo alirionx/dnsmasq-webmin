@@ -134,7 +134,7 @@ const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`
 
     <v-row>
       <!-- file list -->
-      <v-col cols="12" md="4">
+      <v-col cols="12" lg="auto" class="files-col">
         <v-card class="panel" border flat :loading="loading">
           <v-list v-if="files.length" nav density="comfortable" class="files">
             <v-list-subheader class="nav-heading">Config files</v-list-subheader>
@@ -158,7 +158,7 @@ const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`
       </v-col>
 
       <!-- selected file -->
-      <v-col cols="12" md="8">
+      <v-col cols="12" lg class="min-w-0">
         <v-card v-if="selected" class="panel" border flat>
           <div class="d-flex align-center ga-3 pa-4">
             <span class="icon-tile" aria-hidden="true"><component :is="meta.icon" :size="20" /></span>
@@ -260,5 +260,11 @@ const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`
 }
 .min-w-0 {
   min-width: 0;
+}
+/* side by side from Vuetify's lg breakpoint: fixed width, the rest goes to the entries table */
+@media (min-width: 1145px) {
+  .files-col {
+    width: 280px;
+  }
 }
 </style>

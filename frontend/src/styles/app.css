@@ -24,7 +24,7 @@
 
 /* Page layout used by the views */
 .page {
-  max-width: 1200px;
+  max-width: none;
   padding: 40px 32px;
 }
 @media (max-width: 600px) {
