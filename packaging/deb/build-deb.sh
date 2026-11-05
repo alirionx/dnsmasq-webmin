@@ -48,6 +48,7 @@ echo ">> system integration"
 install -Dm644 "$HERE/dnsmasq-webmin.service" "$BUILD/usr/lib/systemd/system/dnsmasq-webmin.service"
 install -Dm644 "$HERE/dnsmasq-webmin.env" "$BUILD/etc/dnsmasq-webmin/dnsmasq-webmin.env"
 install -Dm644 "$ROOT/README.md" "$BUILD/usr/share/doc/dnsmasq-webmin/README.md"
+install -Dm644 "$ROOT/LICENSE" "$BUILD/usr/share/doc/dnsmasq-webmin/LICENSE"
 for script in postinst prerm postrm; do
   install -m755 "$HERE/$script" "$BUILD/DEBIAN/$script"
 done

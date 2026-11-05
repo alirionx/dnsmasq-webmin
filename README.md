@@ -206,3 +206,7 @@ Die Debian-Revision ist die Workflow-Laufnummer, jede neue Version ist damit ein
 ```bash
 .venv/bin/pytest
 ```
+
+## Lizenz
+
+[Apache License 2.0](LICENSE)

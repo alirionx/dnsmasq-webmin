@@ -24,6 +24,7 @@ RUN addgroup -S -g 10001 app && adduser -S -u 10001 -G app -h /app app \
  && mkdir -p /data /etc/dnsmasq.d && chown app:app /data /etc/dnsmasq.d
 
 COPY --from=backend /venv /venv
+COPY LICENSE /app/LICENSE
 COPY app/ /app/app/
 COPY --from=frontend /src/dist/ /app/frontend/dist/
 
